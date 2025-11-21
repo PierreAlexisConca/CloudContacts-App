@@ -2,22 +2,34 @@
 <html lang="es">
 
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <title>CloudContacts</title>
 </head>
 
 <body class="bg-gray-100 py-10">
 
     <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-xl">
+
+        <!-- Flash de errores -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="bg-red-200 text-red-800 p-3 rounded mb-4 text-center font-semibold">
+            {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+
         <h2 class="text-2xl font-bold mb-4 text-center">Agregar Contacto</h2>
 
         <form action="/add" method="POST" class="space-y-4">
-            <input name="name" required placeholder="Nombre Completo" class="w-full p-3 border rounded" />
+            <input name="name" required placeholder="Nombre Completo"
+                class="w-full p-3 border rounded" />
 
             <input name="email" type="email" required placeholder="Correo Electrónico"
                 class="w-full p-3 border rounded" />
 
-            <input name="phone" placeholder="Teléfono (opcional)" class="w-full p-3 border rounded" />
+            <input name="phone" placeholder="Teléfono (opcional)"
+                class="w-full p-3 border rounded" />
 
             <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
                 Guardar
@@ -29,3 +41,4 @@
 </body>
 
 </html>
+

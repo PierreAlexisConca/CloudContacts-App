@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, flash
 from db import get_connection
+import pymysql
 
 app = Flask(__name__)
 app.secret_key = "secreto"
@@ -7,6 +8,7 @@ app.secret_key = "secreto"
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 @app.route("/add", methods=["POST"])
 def add():
@@ -21,13 +23,17 @@ def add():
                 "INSERT INTO contacts(name, email, phone) VALUES (%s, %s, %s)",
                 (name, email, phone)
             )
-            conn.commit()
+        conn.commit()
+
+    except pymysql.err.IntegrityError:
+        flash("❌ El correo ya está registrado.")
     except Exception as e:
-        flash(f"Error al guardar: {e}")
+        flash(f"❌ Error al guardar el contacto: {e}")
     finally:
         conn.close()
 
     return redirect("/contacts")
+
 
 @app.route("/contacts")
 def contacts():
@@ -44,5 +50,7 @@ def contacts():
 
     return render_template("contacts.html", contacts=rows)
 
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000, debug=True)
+
