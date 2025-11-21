@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Contactos</title>
+</head>
+
+<body class="bg-gray-100 p-10">
+
+    <h2 class="text-3xl font-bold mb-6">Lista de Contactos</h2>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white shadow-lg rounded-xl">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="p-3">Nombre</th>
+                    <th class="p-3">Correo</th>
+                    <th class="p-3">Teléfono</th>
+                    <th class="p-3">Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in contacts %}
+                <tr class="border-b">
+                    <td class="p-3">{{ c.name }}</td>
+                    <td class="p-3">{{ c.email }}</td>
+                    <td class="p-3">{{ c.phone }}</td>
+                    <td class="p-3">{{ c.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
